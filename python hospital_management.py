@@ -2,7 +2,6 @@ import sqlite3
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-# قاعدة البيانات
 class HospitalDB:
     def __init__(self):
         self.conn = sqlite3.connect("hospital.db")
@@ -10,21 +9,21 @@ class HospitalDB:
         self.create_tables()
 
     def create_tables(self):
-        self.cursor.execute("""
+        self.cursor.execute(
         CREATE TABLE IF NOT EXISTS doctors (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             specialization TEXT NOT NULL
-        )""")
+        ))
 
-        self.cursor.execute("""
+        self.cursor.execute(
         CREATE TABLE IF NOT EXISTS patients (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             age INTEGER NOT NULL
-        )""")
+        ))
 
-        self.cursor.execute("""
+        self.cursor.execute(
         CREATE TABLE IF NOT EXISTS appointments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             patient_id INTEGER,
@@ -32,7 +31,7 @@ class HospitalDB:
             date TEXT,
             FOREIGN KEY (patient_id) REFERENCES patients(id),
             FOREIGN KEY (doctor_id) REFERENCES doctors(id)
-        )""")
+        ))
 
         self.conn.commit()
 
@@ -67,7 +66,6 @@ class HospitalDB:
         self.conn.close()
 
 
-# الواجهة الرسومية المحسنة
 class HospitalGUI:
     def __init__(self, root):
         self.db = HospitalDB()
@@ -76,11 +74,9 @@ class HospitalGUI:
         self.root.geometry("500x500")
         self.root.configure(bg="#f2f2f2")
 
-        # عنوان
         title_label = tk.Label(root, text="Hospital Management System", font=("Arial", 16, "bold"), bg="#007BFF", fg="white", pady=10)
         title_label.pack(fill=tk.X)
 
-        # إطار الأزرار
         button_frame = ttk.Frame(root, padding=20)
         button_frame.pack(pady=10)
 
